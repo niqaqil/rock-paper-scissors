@@ -1,21 +1,31 @@
 import random
 
+CHOICE = "| gun | rock | fire | scissors | snake | human | tree |\n" \
+         "| wolf | sponge | paper | air | water | dragon | devil | lightning |"
+USER_CHOICE = """Select your choice to play
+example : rock,paper,scissors
+default choice = rock | paper | scissors if no input\n"""
+TURN = """!rating = check current score
+!exit = exit game\n"""
 
 def menu():
     name = input("Enter your name: ")
-    print("Hello,", name)
+    print("Hello, {}!".format(name))
     # dict_name = []
     dict_name = read_file()
     rating = 0
     for key in dict_name:
         if name == key:
+            print("Welcome back.")
             rating = dict_name[key]
     opt_list = ["gun", "rock", "fire", "scissors", "snake", "human", "tree",
                 "wolf", "sponge", "paper", "air", "water", "dragon", "devil", "lightning"]
-    user_choice = input().split(",")
+    print(CHOICE)
+    user_choice = input(USER_CHOICE).split(",")
     print("Okay, let's start")
     comp_list = choice_list(opt_list, user_choice)
     choice = ""
+    print(TURN)
     while choice != "!exit":
         check_choice = False
         win = False
@@ -41,6 +51,7 @@ def menu():
 
         if check_choice:
             print(print_result(win, draw, comp_turn))
+    write_file(name, rating)
 
 
 def read_file():
@@ -56,6 +67,12 @@ def read_file():
     for key in dict_name:
         dict_name[key] = int(dict_name[key])
     return dict_name
+
+
+def write_file(name, rating):
+    file = open("rating.txt", 'a')
+    file.write("{} {}\n".format(name, rating))
+    file.close()
 
 
 def choice_list(opt_list, user_choice):
