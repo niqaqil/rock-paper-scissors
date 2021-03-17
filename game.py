@@ -8,6 +8,7 @@ default choice = rock | paper | scissors if no input\n"""
 TURN = """!rating = check current score
 !exit = exit game\n"""
 
+
 def menu():
     name = input("Enter your name: ")
     print("Hello, {}!".format(name))
